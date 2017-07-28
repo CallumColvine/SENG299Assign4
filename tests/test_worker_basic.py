@@ -60,6 +60,25 @@ class TestWorkerBasic(unittest.TestCase):
 
         self.assertNotEqual(len_to_crawl_after, len_to_crawl_before)
 
+    # My tests
+    def test_target_added_properly(self):
+        worker = BasicUserParseWorker("https://www.reddit.com/user/Chrikelnel")
+        # apparently an empty list evaluates to 0 or False
+        self.assertTrue(worker.to_crawl)
+
+    def test_if_original_target_equals_added_target(self):
+        targetToAdd = "https://www.reddit.com/user/Chrikelnel"
+        worker = BasicUserParseWorker(targetToAdd)
+        self.assertEqual(targetToAdd, worker.original_target)        
+
+    def test_if_crawled_list_updates_correctly(self):
+        worker = BasicUserParseWorker("https://www.reddit.com/user/Chrikelnel")
+        # worker.run()
+        self.assertRaises(ConnectionRefusedError, worker.run)
+        self.assertTrue(len(worker.crawled) > 0)
+
+        
+
 
 
 
